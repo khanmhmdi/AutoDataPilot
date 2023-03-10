@@ -1,3 +1,6 @@
+import pandas as pd 
+import numpy as np 
+
 class Data:
     def __init__(self, PATH, chunk_size=10000 , RAM_SIZE = 4):
         self.PATH = PATH
