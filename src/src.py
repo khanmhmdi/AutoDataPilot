@@ -89,3 +89,22 @@ class Data:
         filled_df = pd.concat(filled_chunks)
         
         return filled_df
+
+    import pandas as pd
+
+    def change_column_dtype_chunked(df, column_name, new_dtype, chunk_size=1000):
+        # Set the data type of the specified column
+        dtype = {column_name: new_dtype}
+        
+        # Iterate over chunks of the DataFrame with the specified chunk size
+        for chunk in pd.read_csv(df, chunksize=chunk_size, dtype=dtype):
+            # Use the astype() method to change the dtype of the specified column in each chunk
+            chunk[column_name] = chunk[column_name].astype(new_dtype)
+            
+            # Append the modified chunk to a new DataFrame
+            try:
+                new_df = pd.concat([new_df, chunk])
+            except NameError:
+                new_df = chunk
+            
+        return new_df
